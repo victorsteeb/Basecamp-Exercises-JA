@@ -1,0 +1,26 @@
+# Partner Basecamp 演習：Python の依存パッケージ。
+#
+# 最速の方法（「externally-managed-environment」/ PEP 668 エラーを避けられます）：
+#     python3 -m venv .venv
+#     source .venv/bin/activate          # Windows: .venv\Scripts\activate
+#     pip install -r requirements.txt
+# その後、.venv のインタープリターをノートブックのカーネルとして選択してください。詳しい手順：SETUP.md
+#
+# 下限バージョンは、ノートブックが使うAPIの範囲を保証します。新規インストールでは、
+# 互換性のある最新リリースが入ります。2026年6月に anthropic 0.104.x で検証済み。
+
+anthropic[bedrock]>=0.69   # すべての演習で使用。[bedrock] エクストラは boto3 を追加し、同じ
+                           # ノートブックを Anthropic のAPIキーでも Amazon Bedrock キーでも
+                           # 動かせるようにします。前者だけを使う場合も害はありません。
+ipykernel>=6               # ノートブックのカーネル
+
+# Day 1/03 Prompt Rescue · Day 2/02 Inference Optimization · archive/day2-03
+matplotlib>=3.7
+tabulate>=0.9
+
+# archive/day2-03 Context Engineering のみ
+seaborn>=0.12
+pandas>=2.0
+numpy>=1.24
+tqdm>=4.66
+python-Levenshtein>=0.21

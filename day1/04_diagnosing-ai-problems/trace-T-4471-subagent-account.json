@@ -1,0 +1,140 @@
+{
+  "agent": "specialist:account",
+  "model": "claude-sonnet-5",
+  "system": "あなたはMeridianのアカウント担当スペシャリストです。一度に扱うチケットは1件です。担当範囲：SSOとSAML、ユーザーとシートの管理、ワークスペースの権限、ロール、2FAとセキュリティ設定、ドメイン認証、監査ログのリクエスト。\n\nチケットIDは最初のユーザーメッセージに入っています。チケットの内容は自分で調べ、お客様が誰なのかも自分で突き止める必要があります。まずそこから始めてください。\n\n=== 使えるツール ===\n\n- get_ticket：チケットの完全な記録を取得する\n- lookup_customer_by_email：送信者のメールアドレスからお客様のアカウントを探す\n- check_sso_config：IdPの設定、証明書の状態、最後に認証に成功した日時、エラー状態\n- check_audit_log：ワークスペースのイベント（イベント種別と日付範囲で絞り込み可）\n- get_workspace_account_summary：シートの使用数／上限、管理者、SSOの状態、作成日\n- list_workspace_users：全ユーザーとそのロール、最終ログイン\n- modify_permissions：ユーザーのロールを変更する（ダウングレードには管理者の確認が必要）\n- reset_2fa：ユーザーの2FA登録を解除し、再登録できるようにする\n\n=== 返す内容 ===\n\n調べた内容をまとめてください。コーディネーターがそれを読んで、お客様向けの回答を作成します。SSOの問題では、正確なエラー状態と修正手順を含めてください。お客様側のIdPで何かしてもらう必要があることがほとんどです。権限の変更では、何を変更したか、誰に影響するかを確認して書いてください。\n\nチケットの内容がアカウントの担当範囲外にわたる場合は、コーディネーターが把握できるようにその旨を書き添えてください。\n",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Category: account\nTicket: T-4471"
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "text": "そのチケットをすぐに取得します。",
+          "type": "text"
+        },
+        {
+          "id": "toolu_01MrKZsisDcYNYTcrSroqNBm",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "ticket_id": "T-4471"
+          },
+          "name": "get_ticket",
+          "type": "tool_use"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01MrKZsisDcYNYTcrSroqNBm",
+          "content": "{\"ticket_id\": \"T-4471\", \"submitted_by\": \"devops@northwind-traders.example\", \"subject\": \"SSO broken + owed a refund\", \"body\": \"Two things:\\n\\n1. Since this morning nobody on our team can log in via Okta. We get 'SAML assertion validation failed' on every attempt. Password login still works but we have that disabled for everyone except me. 40 people locked out.\\n\\n2. Separately \\u2014 you charged us $2,000 on March 1st for the Scale plan but we downgraded to Growth ($800) on Feb 26th. I have the confirmation email. Can you refund the $1,200 difference?\\n\\nThe SSO thing is urgent, people can't work.\", \"priority\": \"high\", \"created_at\": \"2026-03-11T13:51:00Z\"}"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "text": "ここには2つの問題があり、SSOは緊急です。お客様の検索と、SSO設定の確認を同時に行います。",
+          "type": "text"
+        },
+        {
+          "id": "toolu_01BU5pxFEn8asbyVH7QvfR8Z",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "email": "devops@northwind-traders.example"
+          },
+          "name": "lookup_customer_by_email",
+          "type": "tool_use"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01BU5pxFEn8asbyVH7QvfR8Z",
+          "content": "{\"customer_id\": \"cust_8fK2mQ\", \"name\": \"Northwind Traders\"}"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "id": "toolu_01SDN8XFaYmzsN1J9mKcdF2t",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "customer_id": "cust_8fK2mQ"
+          },
+          "name": "check_sso_config",
+          "type": "tool_use"
+        },
+        {
+          "id": "toolu_01ENznyrirBAnzpVLbnVNfQ5",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "customer_id": "cust_8fK2mQ",
+            "event_type": "sso_failure",
+            "after": "2026-03-11T00:00:00Z"
+          },
+          "name": "check_audit_log",
+          "type": "tool_use"
+        },
+        {
+          "id": "toolu_01C1SnXmNciedjNhAfFtBtYP",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "customer_id": "cust_8fK2mQ"
+          },
+          "name": "get_workspace_account_summary",
+          "type": "tool_use"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01SDN8XFaYmzsN1J9mKcdF2t",
+          "content": "{\"provider\": \"okta\", \"status\": \"error\", \"idp_cert_expiry\": \"2026-03-11T08:00:00Z\", \"idp_cert_uploaded\": \"2025-03-11T14:22:00Z\", \"last_successful_auth\": \"2026-03-11T07:58:41Z\", \"error\": \"certificate_expired\"}"
+        },
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01ENznyrirBAnzpVLbnVNfQ5",
+          "content": "{\"events\": [{\"timestamp\": \"2026-02-26T16:42:00Z\", \"event\": \"plan_change\", \"actor\": \"finance@northwind-traders.example\", \"details\": {\"from\": \"scale\", \"to\": \"growth\"}}]}"
+        },
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01C1SnXmNciedjNhAfFtBtYP",
+          "content": "{\"seats_used\": 42, \"seats_limit\": 50, \"admins\": 2, \"sso_status\": \"error\", \"created\": \"2024-08-15\"}"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "text": "必要な情報はすべて揃いました。全体像は次のとおりです。\n\n---\n\n## T-4471：Northwind Traders（`cust_8fK2mQ`）\n\n### 問題1：SSO／Oktaログイン失敗：**根本原因を確認済み**\n\n**エラー状態：** `certificate_expired`\n\n2025-03-11 にMeridianへアップロードされたIdPの署名証明書は有効期間が **1年** で、本日 **08:00 UTC** に失効しました。最後にSSO認証が成功したのは **07:58 UTC** で、失効の2分前です。これは、ユーザーがロックアウトされ始めた時刻とぴったり一致します。パスワードログインは無効化されているため、管理者以外の42人のユーザー全員が影響を受けています。\n\n**修正はすべてお客様のIdP側で行います：**\n1. Oktaの管理コンソールで、新しいSAML署名証明書を生成または取得する。\n2. 新しい証明書（X.509 PEM形式）を、MeridianのSSO設定の **Security → SSO → IdP Certificate** にアップロードする。\n3. 保存されると、SSO認証はすぐに再開されます。再起動は不要です。\n4. 再発を防ぐため、新しい証明書の有効期限にカレンダーのリマインダーを設定することを推奨する。\n\n新しい証明書がアップロードされるまで、こちら側で必要な対応はありません。\n\n---\n\n### 問題2：請求の返金リクエスト：**アカウント担当の範囲外**\n\n監査ログは、**2026-02-26 16:42 UTC** のプラン変更イベント（実行者：`finance@northwind-traders.example`、Scale → Growth）を**確認しています**。これはお客様が挙げた3月1日の請求日より前です。お客様の主張を裏付けています。\n\nただし、請求・返金の処理は私の担当範囲外です。コーディネーターは、$1,200の返金リクエストを請求チームにルーティングし、お客様の主張を裏付ける、確認済みの監査ログの証拠を伝えてください。\n\n---\n\n### コーディネーター向けサマリー\n\n- **SSOの修正：** お客様に、OktaのIdP証明書を更新して再アップロードする手順を送る。セルフサービスで直せますが、緊急です。40人が作業できません。\n- **返金：** 請求にエスカレーションする。監査ログは2月26日のダウングレードを裏付けている。お客様が主張する返金額は$1,200（Scale $2,000 → Growth $800）。",
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
