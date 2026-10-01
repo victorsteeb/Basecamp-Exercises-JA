@@ -28,7 +28,7 @@ export ANTHROPIC_API_KEY=your_key_here   # your shell, the VS Code terminal, or 
 
 ### Claude Code（CLI）
 
-このフォルダーに `cd` で移動し、Claude Codeとペアになって演習を進めてください。
+このフォルダーに `cd` で移動し、Claude Codeと協働しながら演習を進めてください。
 
 ```bash
 cd day1/02_developer-platform
@@ -37,6 +37,6 @@ claude                            # work the exercise with Claude Code as your p
 
 ### Claude Desktop
 
-AIのペアとして、横に開いたまま作業してください。編集しながら、セルの解説、エラーのデバッグ、次に加える変更の提案を依頼できます。
+AIペアプログラマーとして、横に開いたまま作業してください。編集しながら、セルの解説、エラーのデバッグ、次に加える変更の提案を依頼できます。
 
-セットアップセルは、環境変数から `ANTHROPIC_API_KEY` を読み取ります（見つからない場合は非表示の入力欄で入力を求めます）。キーをセルに直接貼り付けないでください。
+セットアップセルは、環境変数から `ANTHROPIC_API_KEY` を読み取ります（見つからない場合は入力した文字が表示されない入力欄で入力を求めます）。キーをセルに直接貼り付けないでください。

@@ -7,6 +7,6 @@ Claude Codeを活用して、稼働中の工場在庫管理システム（Vue 3�
 ## 手順ガイド
 
 - **ライブサイト（推奨）：** https://claude-code-workshop.netlify.app/ （名前とワークショップコードには任意の値を入力してください）
-- **オフライン版：** ライブサイトを利用できない場合は、このフォルダ内の [`workshop-guide.pdf`](./workshop-guide.pdf) を開き、全手順をご確認ください。
+- **オフライン版：** ライブサイトを利用できない場合は、このフォルダー内の [`workshop-guide.pdf`](./workshop-guide.pdf) を開き、全手順をご確認ください。
 
-本演習は、12のコアステップと、発展課題のExpert Challengeで構成されています。
+本演習は、12の基本ステップと、発展課題のExpert Challengeで構成されています。
