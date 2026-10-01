@@ -71,7 +71,7 @@
     },
     {
       "name": "get_workspace_account_summary",
-      "description": "ワークスペースの概要。TODO：get_customer_details と統合する？",
+      "description": "ワークスペースの概要。TODO: get_customer_details と統合する？",
       "input_schema": {
         "type": "object",
         "properties": {

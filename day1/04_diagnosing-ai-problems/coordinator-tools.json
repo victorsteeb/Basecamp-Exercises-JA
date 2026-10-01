@@ -32,7 +32,7 @@
     },
     {
       "name": "fetch_customer_v2_databricks",
-      "description": "Databricksウェアハウスを照会する。v2エンドポイント。旧版ではなくこちらを使うこと。",
+      "description": "Databricksウェアハウスを照会する。v2エンドポイント。旧版ではなくこちらを使用すること。",
       "input_schema": {
         "type": "object",
         "properties": {
@@ -150,7 +150,7 @@
     },
     {
       "name": "check_entitlements",
-      "description": "customer_id を受け取り、利用権限（エンタイトルメント）を返す",
+      "description": "customer_id を受け取り、利用権限（エンタイトルメント）を返す。",
       "input_schema": {
         "type": "object",
         "properties": {
@@ -187,7 +187,7 @@
     },
     {
       "name": "tool_3_v2",
-      "description": "tool_3 の更新版。tool_3 の代わりにこちらを使うこと。",
+      "description": "tool_3 の更新版。tool_3 の代わりにこちらを使用すること。",
       "input_schema": {
         "type": "object",
         "properties": {
@@ -276,7 +276,7 @@
     },
     {
       "name": "escalate_to_human",
-      "description": "人にエスカレーションする。",
+      "description": "人間の担当者にエスカレーションする。",
       "input_schema": {
         "type": "object",
         "properties": {
